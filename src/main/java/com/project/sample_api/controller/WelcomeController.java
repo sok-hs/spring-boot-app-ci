@@ -10,6 +10,7 @@ public class WelcomeController {
 
     @GetMapping("/welcome")
     public String welcome() {
+        System.out.println("Welcome to the Sample Spring Boot API!");
         return "Welcome to the Sample Spring Boot API!";
     }
 }
