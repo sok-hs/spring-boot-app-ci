@@ -1,15 +1,30 @@
-- name: Set up Gradle
-  uses: actions/setup-java@v4
-  with:
-    java-version: '21'
-    distribution: 'temurin'
-    cache: gradle
+name: CI Build
 
-- name: Build with Gradle
-  run: ./gradlew clean build
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
 
-- name: Upload built JAR
-  uses: actions/upload-artifact@v4
-  with:
-    name: spring-app-jar
-    path: build/libs/*.jar
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Gradle
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Build with Gradle
+      run: ./gradlew clean build
+
+    - name: Upload built JAR
+      uses: actions/upload-artifact@v4
+      with:
+        name: spring-app-jar
+        path: build/libs/*.jar
